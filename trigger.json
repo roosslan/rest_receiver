@@ -1,0 +1,56 @@
+[
+  {
+    "when": "StateAttributeChanged",
+    "params": {
+      "triggerType": "Server",
+      "sourceTypes": [
+        "task_izm_ZVI"
+      ],
+      "attributeNames": [
+        "state"
+      ],
+      "statesFrom": [
+        "task_izm_assigned_exp"
+      ],
+      "statesTo": [
+        "task_izm_agreed_exp"
+      ],
+      "itemChangeKind": "Create,Modify"
+    },
+    "then": [
+      {
+        "activity": "SendNotifications",
+        "params": {
+          "srvUrl": "http://10.17.81.220:8081"
+        }
+      }
+    ]
+  },
+  {
+    "when": "StateAttributeChanged",
+    "params": {
+      "triggerType": "Server",
+      "sourceTypes": [
+        "task_izm_ZVI"
+      ],
+      "attributeNames": [
+        "state"
+      ],
+      "statesTo": [
+        "task_izm_decline",
+        "task_izm_done",
+        "deleted"
+      ],
+      "itemChangeKind": "Create,Modify"
+    },
+    "then": [
+      {
+        "activity": "SendNotifications",
+        "params": {
+          "deleState": "deleted",
+          "srvUrl": "http://10.17.81.220:8081"
+        }
+      }
+    ]
+  }
+]
